@@ -1,5 +1,24 @@
 # reparaturcafe
 
+# Install
+
+## Install nginx
+```bash
+apt update
+apt install nginx
+```
+
+## Clone repo
+```bash
+git clone https://github.com/kamkalian/reparaturcafe3.git
+```
+
+## Configure nginx
+```bash
+sudo cp nginx_conf/reparaturcafe.conf /etc/nginx/sites-available/reparaturcafe.conf
+sudo cp nginx_conf/proxy_forward.conf /etc/nginx/snippets/proxy_forward.conf 
+```
+Modify `repataturcafe.conf` for your domain and ssh keys.
 
 # Getting started
 
