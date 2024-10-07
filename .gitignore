@@ -1,0 +1,8 @@
+node_modules
+.venv
+.vscode
+.env.local
+.next
+.mypy_cache
+.env
+*.pyc
