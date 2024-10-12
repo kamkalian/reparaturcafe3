@@ -82,6 +82,7 @@ export async function signIn(username: string, password: string, callbackUrl: st
         ),
         {
             maxAge: 60*60*24,
+            sameSite: "strict",
         }
     )
     redirect(callbackUrl);
