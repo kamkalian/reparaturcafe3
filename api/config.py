@@ -1,5 +1,8 @@
 import re
 import os
+import dotenv
+
+dotenv.load_dotenv()
 
 EMAIL_REGEX = re.compile(r"^[\w\-\_\+\.]+@([\w-]+\.)+[\w-]{2,}$")
 """Compiled RegEx for email adresses."""
