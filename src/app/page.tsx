@@ -12,7 +12,7 @@ export default async function Home() {
       </p>
       <p className="text-xl mb-10">
           <span className="font-bold">Was ist das ReparaturCafé?</span><br></br>
-          Das ReparaturCafé ist eine Veranstaltung bei der z.B. Haushaltsgeräte repariert werden. Unser ehrenamtliches Team ferfügt über jahrelange Erfahrung und hilft gerne bei der Reparatur von so manch altem Schätzchen.<br />
+          Das ReparaturCafé ist eine Veranstaltung bei der z.B. Haushaltsgeräte repariert werden. Unser ehrenamtliches Team verfügt über jahrelange Erfahrung und hilft gerne bei der Reparatur von so manch altem Schätzchen.<br />
       </p>      
       </Suspense>
     </div>
