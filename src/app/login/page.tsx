@@ -1,10 +1,8 @@
 "use client";
 
 import { signIn } from "@/server/auth";
-import { strict } from "assert";
-import { NextResponse } from "next/server";
-import { redirect } from "next/navigation";
 import { ChangeEvent, FormEvent, useState } from "react";
+import { ProviderContext, useSnackbar } from "notistack";
 
 type LoginInput = {
   username: string;
@@ -15,8 +13,37 @@ type PageProps = {
   searchParams: { error?: string }
 }
 
+const enqeueErrorNotification = (
+  msg: string,
+  { enqueueSnackbar }: ProviderContext
+): void => {
+  enqueueSnackbar(
+    <div className='text-xl font-bold'>
+      {msg}
+    </div>, {
+    variant: "error",
+    persist: false,
+    anchorOrigin: {horizontal: "right", vertical: "bottom"},
+  });
+}
+
+const enqeueSuccessNotification = (
+  msg: string,
+  { enqueueSnackbar }: ProviderContext
+): void => {
+  enqueueSnackbar(
+    <div className='text-xl font-bold'>
+      {msg}
+    </div>, {
+    variant: "success",
+    persist: false,
+    anchorOrigin: {horizontal: "right", vertical: "bottom"},
+  });
+}
+
 export default function LoginPage({searchParams}: PageProps) {
   const [inputs, setInputs] = useState<LoginInput>({ username: "", password: "" });
+  const snackbarContext = useSnackbar();
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const name = event.target.name;
@@ -26,13 +53,15 @@ export default function LoginPage({searchParams}: PageProps) {
 
   const handleSubmit = async (event:FormEvent) => {
     event.preventDefault(); 
-    const data = await signIn(
+    const signInSuccessful = await signIn(
       inputs.username, 
       inputs.password,
-      searchParams["callbackUrl"] ? decodeURIComponent(searchParams["callbackUrl"]) : "/", 
+      searchParams["callbackUrl"] ? decodeURIComponent(searchParams["callbackUrl"]) : "/"
     );
-    if(data === undefined){
-      console.log("Username oder Passwort falsch.");
+    if(!signInSuccessful && signInSuccessful !== undefined){
+      enqeueErrorNotification("Username oder Passwort falsch!", snackbarContext);
+    }else{
+      enqeueSuccessNotification("Login erfolgreich!", snackbarContext);
     }
   }
   return (
