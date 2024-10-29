@@ -22,7 +22,7 @@ cd ~
 ## Install required packages
 ```bash
 sudo apt update
-sudo apt install nginx build-essential libssl-dev libffi-dev python3-dev python3-venv mariadb-server sqitch
+sudo apt install nginx build-essential libssl-dev libffi-dev python3-dev python3-venv mariadb-server sqitch npm
 ```
 
 ## Clone repo
@@ -85,17 +85,18 @@ python create_user.py
 
 # Getting started
 
-## Start development server 
-```bash
-npm run dev
-```
-
 ## Install venv and required modules
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 ```
+
+## Create SSL certificates
+```bash
+sudo .venv/bin/certbot --certonly --nginx
+```
+Write the correct path of ssl cert files to nginx conf.
 
 ## Create .env
 Specify the following variables:
@@ -109,11 +110,44 @@ SECRET_KEY=<key>
 ALGORITHM=HS256
 ACCESS_TOKEN_EXPIRE_MINUTES=1445
 
-## Start api
+
+## Install npm modules
+```bash
+npm install
+```
+
+## Install pm2 and generate startup script
+```bash
+sudo npm install -g pm2
+```
+
+## For Developement 
+### Start development server 
+```bash
+npm run dev
+```
+
+### Start api
 ```bash
 .venv/bin/uvicorn --reload --port 8000 --app-dir "/home/oskar/reparaturcafe3/" api.main:app
 ```
 
+## For Production
+### Build gui
+```bash
+npm install
+```
+
+### Start app and api via pm2
+```bash
+pm2 start npm -- start
+pm2 start ".venv/bin/uvicorn --reload --port 8000 --app-dir '/home/oskar/reparaturcafe3/' api.main:app" --name fastapi
+```
+
+### Save pm2 process list
+```bash
+pm2 save
+```
 
 # Sqitch
 
