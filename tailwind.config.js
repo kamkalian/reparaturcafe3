@@ -23,6 +23,7 @@ module.exports = {
           'inactive': '#999'
         },
         'info': '#fed300',
+        'info-second': '#fed30080',
         'error': 'cb0100'
       },
       screens: {
