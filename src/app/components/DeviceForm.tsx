@@ -110,49 +110,56 @@ export default function DeviceForm(props: Props) {
   }
 
   return(
-    <div className="border-2 border-white rounded-lg mt-4 flex-col w-full">
-      <form className="flex-col w-full">
-        <div className="p-3 w-full lg:w-1/2">
-          <label htmlFor="device-name" className="block mb-2 text-black font-thin">Gerätebezeichnung</label>
-          <input 
-            type="text"
-            id="device-name"
-            className="bg-white border rounded-lg block w-full p-2.5"
-            value={deviceName}
-            onChange={(event) => {
-              handleDeviceNameChange(event.target.value);
-            }}
-            />
-          {deviceNameMissing ? (
-            <p className="mt-2 font-bold text-red-600 dark:text-red-500">Bitte Gerätebezeichnung angeben!</p>
-          ) : ""}
+    <div className="flex-col w-full space-y-6">
+      <div className="w-full">
+        <label htmlFor="device-name" className="label">Gerätebezeichnung</label>
+        <input 
+          type="text"
+          id="device-name"
+          className="input w-full"
+          value={deviceName}
+          onChange={(event) => {
+            handleDeviceNameChange(event.target.value);
+          }}
+          />
+        {deviceNameMissing ? (
+          <p className="mt-2 font-bold text-red-600 dark:text-red-500">Bitte Gerätebezeichnung angeben!</p>
+        ) : ""}
+      </div>
+      <div className="flex flex-row w-full">
+        <div className="w-1/3">
+          <label htmlFor="manufacturer" className="label">Hersteller</label>
         </div>
-        <div className="p-3 w-full lg:w-1/2">
-          <label htmlFor="manufacturer" className="block mb-2 text-black font-thin">Hersteller</label>
+        <div className="w-2/3">
           <input
             type="text"
             id="manufacturer"
-            className="bg-white border rounded-lg block w-full p-2.5"
+            className="input w-full"
             value={deviceManufacturer}
             onChange={(event) => {
               handleDeviceManufacturerChange(event.target.value);
             }}
             />
         </div>
-        <div className="p-3 w-full lg:w-1/2">
-          <label htmlFor="model" className="block mb-2 text-black font-thin">Modell</label>
+      </div>
+      <div className="flex flex-row w-full">
+        <div className="w-1/3">
+          <label htmlFor="model" className="label">Modell</label>
+        </div>
+        <div className="w-2/3">
           <input
             type="text"
             id="model"
-            className="bg-white border rounded-lg block w-full p-2.5"
+            className="input w-full"
             value={deviceModel}
             onChange={(event) => {
               handleDeviceModelChange(event.target.value);
             }}
             />
         </div>
-        <div className="w-full p-3">
-          <label htmlFor="device-error-description" className="block mb-2 text-black font-thin">Fehlerbeschreibung</label>
+      </div>
+        <div className="w-full">
+          <label htmlFor="device-error-description" className="block mb-2 label">Fehlerbeschreibung</label>
           <textarea
             id="device-error-description"
             rows={4}
@@ -163,8 +170,7 @@ export default function DeviceForm(props: Props) {
             }}
             ></textarea>
         </div>
-      </form>
-      <div className="w-full p-3">
+      <div className="w-full">
         <button 
         className="bg-button-active text-white rounded-lg p-3 w-full"
         onClick={handleSaveButtonClick}

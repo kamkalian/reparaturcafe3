@@ -244,115 +244,131 @@ export default function OwnerForm(props: Props) {
  
 
   return(
-    <div className="border-2 border-white rounded-lg mt-4 flex-col w-full">
-      <form className="flex-col w-full">
-        <div className="p-3 w-full lg:w-1/2">
-          <label htmlFor="owner-last-name" className="block mb-2 text-black font-thin">Nachname</label>
-          <input 
+    <div className="flex flex-col w-full space-y-6">
+
+      <div className="flex flex-row w-full">
+        <div className="w-1/3 ">
+          <label htmlFor="owner-last-name" className="label">Nachname</label>
+        </div>
+        <div className="w-2/3">
+          <input
             type="text"
             id="owner-last-name"
-            className="bg-white border rounded-lg block w-full p-2.5"
+            className="input w-full"
             value={ownerLastName}
             onChange={(event) => {
               handleOwnerLastNameChange(event.target.value);
-            }}
-            />
+            } } />
           {ownerNameMissing ? (
-          <p className="mt-2 font-bold text-red-600 dark:text-red-500">Bitte Nachname angeben!</p>
+            <p className="mt-2 font-bold text-red-600 dark:text-red-500">Bitte Nachname angeben!</p>
           ) : ""}
         </div>
-        <div className="p-3 w-full">
-            <div className='font-thin'>
-              {contacts.length > 0 ? "Vorhandenen Kontakt übernehmen?" : ""}
-            </div>  
-            {contacts}
+      </div>
+
+      <div className="w-full">
+        <div className='font-thin'>
+          {contacts.length > 0 ? "Vorhandenen Kontakt übernehmen?" : ""}
         </div>
-        <div className="p-3 w-full lg:w-1/2">
-          <label htmlFor="owner-first-name" className="block mb-2 text-black font-thin">Vorname</label>
+        {contacts}
+      </div>
+
+      <div className="flex flex-row w-full">
+        <div className="w-1/3">
+          <label htmlFor="owner-first-name" className="label">Vorname</label>
+        </div>
+        <div className="w-2/3">
           <input
             type="text"
             id="owner-first-name"
-            className="bg-white border rounded-lg block w-full p-2.5"
+            className="input w-full"
             value={ownerFirstName}
             onChange={(event) => {
               handleOwnerFirstNameChange(event.target.value);
-            }}
-            />
+            } } />
         </div>
-        <div className="p-3 w-full lg:w-1/2">
-          <label htmlFor="owner-phone" className="block mb-2 text-black font-thin">Telefon</label>
+      </div>
+
+      <div className="flex flex-row w-full">
+        <div className="w-1/3">
+          <label htmlFor="owner-phone" className="label">Telefon</label>
+        </div>
+        <div className="w-2/3">
           <input
             type="text"
             id="owner-phone"
-            className="bg-white border rounded-lg block w-full p-2.5"
+            className="input w-full"
             value={ownerPhone}
             onChange={(event) => {
               handleOwnerPhoneChange(event.target.value);
-            }}
-            />
+            } } />
         </div>
-        <div className="p-3 w-full lg:w-1/2">
-          <label htmlFor="owner-email" className="block mb-2 text-black font-thin">Email</label>
+      </div>
+
+      <div className="flex flex-row w-full">
+        <div className="w-1/3">
+          <label htmlFor="owner-email" className="label">Email</label>
+        </div>
+        <div className="w-2/3">
           <input
             type="text"
             id="owner-email"
-            className="bg-white border rounded-lg block w-full p-2.5"
+            className="input w-full"
             value={ownerEmail}
             onChange={(event) => {
               handleOwnerEmailChange(event.target.value);
-            }}
-            />
+            } } />
         </div>
-        <div className="p-3 w-full lg:w-1/2">
-          <label htmlFor="owner-street" className="block mb-2 text-black font-thin">Straße</label>
+      </div>
+
+      <div className="flex flex-row w-full space-x-4">
+        <div className='w-2/3'>
+          <label htmlFor="owner-street" className="label">Straße</label>
           <input
             type="text"
             id="owner-street"
-            className="bg-white border rounded-lg block w-full p-2.5"
+            className="input w-full"
             value={ownerStreet}
             onChange={(event) => {
               handleOwnerStreetChange(event.target.value);
-            }}
-            />
+            } } />
         </div>
-        <div className="p-3 w-full lg:w-1/2">
-          <label htmlFor="owner-street-no" className="block mb-2 text-black font-thin">Hausnr.</label>
+        <div className='w-1/3'>
+          <label htmlFor="owner-street-no" className="label">Hausnr.</label>
           <input
             type="text"
             id="owner-street-no"
-            className="bg-white border rounded-lg block w-full p-2.5"
+            className="input w-full"
             value={ownerStreetNo}
             onChange={(event) => {
               handleOwnerStreetNoChange(event.target.value);
-            }}
-            />
+            } } />
         </div>
-        <div className="p-3 w-full lg:w-1/2">
-          <label htmlFor="owner-zip" className="block mb-2 text-black font-thin">PLZ</label>
-          <input
-            type="text"
-            id="owner-zip"
-            className="bg-white border rounded-lg block w-full p-2.5"
-            value={ownerZip}
-            onChange={(event) => {
-              handleOwnerZipChange(event.target.value);
-            }}
-            />
-        </div>
-      </form>
+      </div>
+
+      <div className="w-1/2">
+        <label htmlFor="owner-zip" className="label">PLZ</label>
+        <input
+          type="text"
+          id="owner-zip"
+          className="input w-full"
+          value={ownerZip}
+          onChange={(event) => {
+            handleOwnerZipChange(event.target.value);
+          } } />
+      </div>
+
       <div className="w-full p-3 flex flex-row space-x-2">
         {ownerID ? (
-          <button 
-          className="bg-button-active text-info rounded-lg p-3 w-full"
-          onClick={handleRemoveOwnerLinkButtonClick}
+          <button
+            className="bg-button-active text-info rounded-lg p-3 w-full"
+            onClick={handleRemoveOwnerLinkButtonClick}
           >
             Zuordnung entfernen
           </button>
-        ) : ""
-        }
-        <button 
-        className="bg-button-active text-white rounded-lg p-3 w-full"
-        onClick={handleSaveButtonClick}
+        ) : ""}
+        <button
+          className="bg-button-active text-white rounded-lg p-3 w-full"
+          onClick={handleSaveButtonClick}
         >
           {ownerID ? "Änderungen speichern" : "Kontakt neu anlegen"}
         </button>

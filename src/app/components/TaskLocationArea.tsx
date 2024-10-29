@@ -45,37 +45,41 @@ export default function TaskLocationArea(props: Props) {
   
 
   return(
-    <div className="screen:border-2 border-gray-300 p-4 mb-4 rounded-md">
+    <div className="screen:border-2 border-gray-300 mb-4 rounded-lg screen:w-1/2 print:w-full">
       <div className="flex items-start">
-        <div className="w-full font-bold">Lagerort</div>
+        <div className="font-thin bg-slate-200 px-2 rounded-tl-md rounded-br-md print:mb-2 print:w-full">Lagerort</div>
+        <div className="flex-auto"></div>
         <EditButton
           handleEditButtonClick={handleEditButtonClick}
+          corner={true}
         />
       </div>
-      { editLocationFormOpen ? (
-        <LocationForm
-          currentTaskShelfNo={props.taskShelfNo}
-          currentTaskShelfFloorNo={props.taskShelfFloorNo}
-          currentTaskOtherLocation={props.taskOtherLocation}
-          handleCloseLocationForm={handleCloseLocationForm}
-          taskID={props.taskID}
-        />
-      ) : (
-        <div className="flex flex-row">
-          <div className="m-4 w-1/3">
-            <h4 className="font-thin">Schrank</h4>
-            <p>{props.taskShelfNo ? props.taskShelfNo : "-"}</p>
+      <div className="p-4 print:p-2">
+        { editLocationFormOpen ? (
+          <LocationForm
+            currentTaskShelfNo={props.taskShelfNo}
+            currentTaskShelfFloorNo={props.taskShelfFloorNo}
+            currentTaskOtherLocation={props.taskOtherLocation}
+            handleCloseLocationForm={handleCloseLocationForm}
+            taskID={props.taskID}
+          />
+        ) : (
+          <div className="flex flex-row space-x-4 items-start">
+            <div className="w-1/4">
+              <h4 className="label">Schrank</h4>
+              <p>{props.taskShelfNo ? props.taskShelfNo : "-"}</p>
+            </div>
+            <div className="w-1/4">
+              <h4 className="label">Fach</h4>
+              <p>{props.taskShelfFloorNo ? props.taskShelfFloorNo : "-"}</p>
+            </div>
+            <div className="w-1/2">
+              <h4 className="label">Anderer Ort</h4>
+              <p>{props.taskOtherLocation ? props.taskOtherLocation : "-"}</p>
+            </div>
           </div>
-          <div className="m-4 w-1/3">
-            <h4 className="font-thin">Fach</h4>
-            <p>{props.taskShelfFloorNo ? props.taskShelfFloorNo : "-"}</p>
-          </div>
-          <div className="m-4 w-1/3">
-            <h4 className="font-thin">Anderer Ort</h4>
-            <p>{props.taskOtherLocation ? props.taskOtherLocation : "-"}</p>
-          </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }

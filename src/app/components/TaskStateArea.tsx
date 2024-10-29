@@ -187,9 +187,10 @@ export default function TaskStateArea(props: Props) {
   );
   
   return(
-    <div className="screen:border-2 border-gray-300 p-4 mb-4 rounded-md">
+    <div className="screen:border-2 border-gray-300 mb-4 rounded-lg overflow-hidden screen:w-1/2 print:w-full">
       <div className="flex flex-col items-start">
-        <div className="w-full font-bold">Status</div>
+      <div className="font-thin bg-slate-200 px-2 rounded-tl-md rounded-br-md print:mb-2 print:w-full">Status</div>
+      <div className="flex-auto"></div>
         <div className="flex flex-col w-full p-4 mt-4 print:hidden">
           <ol className="flex items-center w-full">
               {buttonNew()}
@@ -199,12 +200,12 @@ export default function TaskStateArea(props: Props) {
           </ol>
         </div>
         <div className="flex flex-row w-full">
-          <div className="m-4 w-1/2">
-            <h4 className="font-thin">Erstelldatum</h4>
+          <div className="screen:m-4 print:p-2 w-1/2">
+            <h4 className="label">Erstelldatum</h4>
             <p>{creationDateFormatted ? creationDateFormatted : "-"}</p>
           </div>
-          <div className="m-4 w-1/2">
-            <label htmlFor="users" className="block font-thin">Bearbeiter</label>
+          <div className="screen:m-4 print:pl-1 w-1/2">
+            <label htmlFor="users" className="block label">Bearbeiter</label>
             <select
               id="users"
               className="bg-gray-50 border border-gray-300 rounded-lg block w-full p-1"

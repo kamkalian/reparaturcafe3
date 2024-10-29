@@ -80,46 +80,59 @@ export default function LocationForm(props: Props) {
 
 
   return(
-    <div className="border-2 border-white rounded-lg mt-4 flex-col w-full">
-      <form className="flex-col w-full">
-        <div className="p-3 w-full lg:w-1/2">
-          <label htmlFor="device-name" className="block mb-2 text-black font-thin">Schrank Nr.</label>
+    <div className="flex flex-col w-full space-y-6">
+
+      <div className="flex flex-row w-full">
+        <div className="w-1/3">
+          <label htmlFor="device-name" className="label">Schrank Nr.</label>
+        </div>
+        <div className="w-2/3">
           <input 
             type="text"
             id="device-name"
-            className="bg-white border rounded-lg block w-full p-2.5"
+            className="input w-full"
             value={taskShelfNo}
             onChange={(event) => {
               handleTaskShelfNoChange(event.target.value);
             }}
             />
         </div>
-        <div className="p-3 w-full lg:w-1/2">
-          <label htmlFor="manufacturer" className="block mb-2 text-black font-thin">Fach Nr.</label>
+      </div>
+
+      <div className="flex flex-row w-full">
+        <div className="w-1/3">
+          <label htmlFor="manufacturer" className="label">Fach Nr.</label>
+        </div>
+        <div className="w-2/3">
           <input
             type="text"
             id="manufacturer"
-            className="bg-white border rounded-lg block w-full p-2.5"
+            className="input w-full"
             value={taskShelfFloorNo}
             onChange={(event) => {
               handleTaskShelfFloorNoChange(event.target.value);
             }}
             />
+          </div>
+      </div>
+
+      <div className="flex flex-row w-full">
+        <div className="w-1/3">
+          <label htmlFor="model" className="label">Anderer Ort</label>
         </div>
-        <div className="p-3 w-full lg:w-1/2">
-          <label htmlFor="model" className="block mb-2 text-black font-thin">Anderer Ort</label>
+        <div className="w-2/3">
           <input
             type="text"
             id="model"
-            className="bg-white border rounded-lg block w-full p-2.5"
+            className="input w-full"
             value={taskOtherLocation}
             onChange={(event) => {
               handleTaskOtherLocationChange(event.target.value);
             }}
             />
         </div>
-        
-      </form>
+      </div>
+
       <div className="w-full p-3">
         <button 
         className="bg-button-active text-white rounded-lg p-3 w-full"

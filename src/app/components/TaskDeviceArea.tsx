@@ -31,43 +31,47 @@ export default function TaskDeviceArea(props: Props) {
   }
   
   return(
-    <div className="screen:border-2 border-gray-300 p-4 mb-4 rounded-md w-1/2">
+    <div className="screen:border-2 border-gray-300 mb-4 rounded-lg screen:w-1/2 print:w-full overflow-hidden">
       <div className="flex items-start">
-        <div className="flex-auto font-bold">Gerätedaten</div>
+        <div className="font-thin bg-slate-200 px-2 rounded-tl-md rounded-br-md print:mb-2 print:w-full">Gerätedaten</div>
+        <div className="flex-auto"></div>
         <EditButton
           handleEditButtonClick={handleEditButtonClick}
+          corner={true}
         />
       </div>
-      {editDeviceFormOpen ? (
-        <>
-          <DeviceForm
-          taskID={props.taskID}
-          currentDeviceName={props.currentDeviceName}
-          currentDeviceManufacturer={props.currentDeviceManufacturer}
-          currentDeviceModel={props.currentDeviceModel}
-          currentDeviceErrorDescription={props.currentDeviceErrorDescription}
-          new_or_edit="edit"
-          handleCloseDeviceForm={handleCloseDeviceForm}
-          />
-        </>
-      ) : (
-        <>
-          <div className="flex flex-row">
-            <div className="m-4 w-1/2">
-              <h4 className="font-thin">Hersteller</h4>
-              <p>{props.currentDeviceManufacturer ? props.currentDeviceManufacturer : "-"}</p>
+      <div className="p-4 print:p-2">
+        {editDeviceFormOpen ? (
+          <>
+            <DeviceForm
+            taskID={props.taskID}
+            currentDeviceName={props.currentDeviceName}
+            currentDeviceManufacturer={props.currentDeviceManufacturer}
+            currentDeviceModel={props.currentDeviceModel}
+            currentDeviceErrorDescription={props.currentDeviceErrorDescription}
+            new_or_edit="edit"
+            handleCloseDeviceForm={handleCloseDeviceForm}
+            />
+          </>
+        ) : (
+          <>
+            <div className="flex flex-row space-x-4 w-full">
+              <h4 className="label w-20 print:w-14">Hersteller</h4>
+              <div className="w-10 print:w-4 text-center">:</div>
+              <p className="">{props.currentDeviceManufacturer ? props.currentDeviceManufacturer : "-"}</p>
             </div>
-            <div className="m-4 w-1/2">
-              <h4 className="font-thin">Modell</h4>
-              <p>{props.currentDeviceModel ? props.currentDeviceModel : "-"}</p>
+            <div className="flex flex-row space-x-4 overflow-hidden">
+              <h4 className="label w-20 print:w-14">Modell</h4>
+              <p className="w-10 print:w-4 text-center">:</p>
+              <p className="">{props.currentDeviceModel ? props.currentDeviceModel : "-"}</p>
             </div>
-          </div>
-          <div className="m-4">
-            <h4 className="font-thin">Fehlerbeschreibung</h4>
-            <p>{props.currentDeviceErrorDescription ? props.currentDeviceErrorDescription : "-"}</p>
-          </div>
-        </>
-      )}
+            <div className="flex flex-col w-full">
+              <h4 className="label w-full mt-4">Fehlerbeschreibung</h4>
+              <p className="w-full">{props.currentDeviceErrorDescription ? props.currentDeviceErrorDescription : "-"}</p>
+            </div>
+          </>
+        )}
+      </div>
     </div>
   );
 }

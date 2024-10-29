@@ -8,7 +8,7 @@ import getServerAuthSession from "@/server/auth";
 async function Navbar() {
   const authSession = await getServerAuthSession();
   return (
-    <div className="w-full h-20 bg-white sticky top-0 shadow z-40 print:hidden">
+    <div className="w-full h-20 bg-white sticky top-0 shadow z-40 print:hidden print:mt-0">
       <div className="container mx-auto px-4 h-full">
         <div className="flex justify-between items-center h-full">
           <Logo />

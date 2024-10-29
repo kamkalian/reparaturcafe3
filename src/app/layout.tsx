@@ -18,7 +18,7 @@ export default function RootLayout({
     <CookiesProvider>
       <html lang="de">
         <body>
-          <div className="text-lg font-medium relative">
+          <div className="screen:text-lg print:text-sm font-medium relative">
             <NotistackProvider maxSnack={3}>
               {children}
             </NotistackProvider>

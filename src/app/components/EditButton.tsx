@@ -1,11 +1,14 @@
 'use client'
 
 
-export default function EditButton(props: {handleEditButtonClick}) {
+export default function EditButton(props: {handleEditButtonClick, corner}) {
 
     return(
         <button 
-        className="bg-button-active rounded-lg w-14 h-14 items-center justify-center flex print:hidden"
+        className={!props.corner ? (
+            "bg-button-active rounded-md w-14 h-14 items-center justify-center flex print:hidden") : (
+                "bg-button-active rounded-tr-md rounded-bl-md w-14 h-14 items-center justify-center flex print:hidden"
+            )}
         onClick={props.handleEditButtonClick}
         >
         <svg

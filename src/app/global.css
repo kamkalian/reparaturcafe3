@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    .label {
+        @apply font-bold;
+    }
+
+    .input {
+        @apply border rounded-lg p-2;
+    }
+  }
