@@ -1,26 +1,31 @@
-# Use an official Python runtime as a parent image
-FROM python:3.9-slim
+FROM ubuntu:23.04
 
-# Set the working directory in the container
-WORKDIR /app
+RUN apt update && apt install -y nano curl
 
-# Copy the current directory contents into the container at /app
-COPY . /app
+RUN apt update && apt install -y \
+    nginx \
+    build-essential \
+    libssl-dev \
+    libffi-dev \
+    python3 \
+    python3-pip \
+    python3-venv \
+    mariadb-server \
+    sqitch \
+    npm
 
-# Install any needed packages specified in requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
+RUN service mariadb start
 
-# Install npm and pm2
-RUN apt-get update && apt-get install -y npm && npm install -g pm2
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash \
+    && export NVM_DIR="$HOME/.nvm" \
+    && [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" \
+    && [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" \
+    && nvm install --lts
 
-# Install the npm dependencies
-RUN npm install
 
-# Build the Next.js application
-RUN npm run build
 
-# Expose the port the app runs on
 EXPOSE 8000
+EXPOSE 3000
 
-# Run the application
-CMD ["pm2-runtime", "start", "npm", "--", "start"]
+
+CMD ["tail", "-f", "/dev/null"]
