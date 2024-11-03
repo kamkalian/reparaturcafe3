@@ -1,6 +1,11 @@
 #!/bin/bash
 set -e
 
-npm install
-npm run dev
-.venv/bin/uvicorn --reload --port 8000 --app-dir "/root/app" api.main:app
+# Run npm in the background
+npm run dev &
+
+# Run uvicorn in the background
+.venv/bin/uvicorn --reload --port 8000 --app-dir "/root/app" api.main:app &
+
+# Wait for both background processes to finish
+wait
