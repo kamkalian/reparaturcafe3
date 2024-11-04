@@ -101,7 +101,7 @@ export default async function Page({ params }: { params: { id: string } }) {
         <TaskCard
         data={taskData}
         clickable={false}/>
-        <div className="flex flex-row space-x-4">
+        <div className="flex flex-row space-x-4 screen:hidden">
           <div className="w-1/2"></div>
           <div className="screen:border-2 border-gray-300 mb-4 rounded-lg w-1/2 overflow-hidden">
             <div className="flex items-start">
