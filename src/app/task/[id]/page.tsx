@@ -101,6 +101,20 @@ export default async function Page({ params }: { params: { id: string } }) {
         <TaskCard
         data={taskData}
         clickable={false}/>
+        <div className="flex flex-row space-x-4">
+          <div className="w-1/2"></div>
+          <div className="screen:border-2 border-gray-300 mb-4 rounded-lg w-1/2 overflow-hidden">
+            <div className="flex items-start">
+              <div className="font-thin bg-slate-200 px-2 rounded-tl-md rounded-br-md print:mb-2 print:w-full">QR-Code</div>
+              <div className="flex-auto"></div>
+            </div>
+            <div className="p-4 print:p-1 w-full flex flex-row">
+              <div className="flex-auto"></div>
+              <img className="w-24 h-24 rounded-md" src="https://reparaturcafe-dev.it-awo.de/fastapi/qrcode/create?task_id=1000"></img>
+              <div className="flex-auto"></div>
+            </div>
+          </div>
+        </div>
         <div className="flex screen:flex-row space-x-4">
           <TaskDeviceArea 
           taskID={params.id}
@@ -136,6 +150,7 @@ export default async function Page({ params }: { params: { id: string } }) {
             userList={userList}
           />
         </div>
+
 
         <div className="mb-4 rounded-lg w-full overflow-hidden screen:hidden">
           <div className="flex flex-col items-start pb-4">
