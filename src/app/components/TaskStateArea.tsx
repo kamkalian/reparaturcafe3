@@ -204,7 +204,7 @@ export default function TaskStateArea(props: Props) {
             <h4 className="label">Erstelldatum</h4>
             <p>{creationDateFormatted ? creationDateFormatted : "-"}</p>
           </div>
-          <div className="screen:m-4 print:pl-1 w-1/2">
+          <div className="screen:m-4 print:p-2 w-1/2">
             <label htmlFor="users" className="block label">Bearbeiter</label>
             <select
               id="users"
