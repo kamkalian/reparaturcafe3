@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import typing as t
-from datetime import timedelta
 
 import fastapi
 import io
@@ -19,7 +18,7 @@ if t.TYPE_CHECKING:
 router = fastapi.APIRouter(tags=["QRCode"], prefix="/qrcode")
 
 
-@router.post("/create")
+@router.get("/create")
 async def qrcode_create(
     db_conn: db_types.DBConnection = fastapi.Depends(get_db_connection),
     *,
