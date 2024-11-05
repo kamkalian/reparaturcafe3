@@ -12,9 +12,9 @@ async def create_user():
     db_conn = await create_mysql_connection()
     
 
-    username = input("Username:")
-    email = input("Email:")
-    password = input("Password:")
+    username = "root"
+    email = "root@example.com"
+    password = "rootpassword"
 
     user_payload = PayloadUserCreate(
         email=email,
