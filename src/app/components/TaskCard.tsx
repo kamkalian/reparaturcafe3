@@ -18,6 +18,21 @@ export default function TaskCard({ data, clickable }) {
     window.print();
   }
 
+  const handlePrintQRCodeButtonClick = async () => {
+    const body = JSON.stringify({
+      task_id: data["id"]
+    });  
+    const res = await fetch(
+      process.env.NEXT_PUBLIC_API_URL + '/fastapi/qrcode/print?task_id=' + data["id"] , {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: body
+      }
+    )
+  }
+
   return(
     <>
       <div 
@@ -73,8 +88,8 @@ export default function TaskCard({ data, clickable }) {
             </button>
             <div className="flex-1"></div>
             <button 
-            className="bg-button-inactive rounded-md px-4 text-white h-14 items-center justify-center flex print:hidden"
-            disabled
+            className="bg-button-active rounded-md px-4 text-white h-14 items-center justify-center flex print:hidden"
+            onClick={handlePrintQRCodeButtonClick}
             >
               <svg className="h-8 w-8 text-white"  width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <rect x="4" y="4" width="6" height="6" rx="1" />  <line x1="7" y1="17" x2="7" y2="17.01" />  <rect x="14" y="4" width="6" height="6" rx="1" />  <line x1="7" y1="7" x2="7" y2="7.01" />  <rect x="4" y="14" width="6" height="6" rx="1" />  <line x1="17" y1="7" x2="17" y2="7.01" />  <line x1="14" y1="14" x2="17" y2="14" />  <line x1="20" y1="14" x2="20" y2="14.01" />  <line x1="14" y1="14" x2="14" y2="17" />  <line x1="14" y1="20" x2="17" y2="20" />  <line x1="17" y1="17" x2="20" y2="17" />  <line x1="20" y1="17" x2="20" y2="20" /></svg>
             </button>

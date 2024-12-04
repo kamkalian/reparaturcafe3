@@ -6,3 +6,4 @@ users [oskar] 2024-07-02T08:36:58Z root <root@ubuntu-2gb-nbg1-1> # Creates user 
 tasks 2024-07-05T18:51:09Z root <root@ubuntu-2gb-nbg1-1> # Add tasks.
 owner 2024-07-06T17:15:04Z root <root@ubuntu-2gb-nbg1-1> # Creates owner table.
 log 2024-09-30T16:24:44Z oskar <oskar@ubuntu-2gb-nbg1-1> # Creates log table
+qrcode_print_queue 2024-11-11T15:52:12Z oskar <oskar@ubuntu-2gb-nbg1-1> # Add table qrcode_print_queue
