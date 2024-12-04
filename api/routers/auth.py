@@ -53,7 +53,7 @@ async def login(
         max_age=86400,
         secure=True,
         httponly=True,
-        samesite="strict")
+        samesite="lax")
     return Token(access_token=access_token, token_type="bearer")
 
 

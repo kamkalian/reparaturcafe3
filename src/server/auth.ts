@@ -53,7 +53,7 @@ export async function signIn(username: string, password: string, callbackUrl: st
         {
             maxAge: 60*60*24,
             httpOnly: true,
-            sameSite: "strict",
+            sameSite: "lax",
             secure: true,
         }
     )
@@ -82,7 +82,7 @@ export async function signIn(username: string, password: string, callbackUrl: st
         ),
         {
             maxAge: 60*60*24,
-            sameSite: "strict",
+            sameSite: "lax",
         }
     )
     redirect(callbackUrl);
