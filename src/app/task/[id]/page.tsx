@@ -93,6 +93,7 @@ export default async function Page({ params }: { params: { id: string } }) {
   })
   const userList = await getUserList();
   const userID = await getUserID();
+  const srcQRCode = "https://reparaturcafe-dev.it-awo.de/fastapi/qrcode/create?task_id=" + taskData["id"]
 
   return (
     <>
@@ -110,7 +111,7 @@ export default async function Page({ params }: { params: { id: string } }) {
             </div>
             <div className="p-4 print:p-1 w-full flex flex-row">
               <div className="flex-auto"></div>
-              <img className="w-24 h-24 rounded-md" src="https://reparaturcafe-dev.it-awo.de/fastapi/qrcode/create?task_id=1000"></img>
+              <img className="w-24 h-24 rounded-md" src={srcQRCode}></img>
               <div className="flex-auto"></div>
             </div>
           </div>
