@@ -13,7 +13,6 @@ export async function createTask(
     device_manufacturer: deviceManafacturer ? deviceManafacturer : "",
     device_model: deviceModel ? deviceModel : "",
   });   
-  console.log(body)
   const res = await fetch(
     process.env.NEXT_PUBLIC_API_URL + '/fastapi/task/create', {
         method: 'POST',
