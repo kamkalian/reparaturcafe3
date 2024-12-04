@@ -41,7 +41,7 @@ export default function UserNavbar() {
   );
 
   return(
-        <ul className="hidden md:flex items-center gap-x-6">
+        <ul className="flex flex-row items-center gap-x-6">
           <li>
             <Link href="/dashboard?new=1&in_process=1&done=1">
               <p>Dashboard</p>
