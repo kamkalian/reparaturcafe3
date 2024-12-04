@@ -12,7 +12,7 @@ async function Navbar() {
       <div className="container mx-auto px-4 h-full">
         <div className="flex justify-between items-center h-full">
           <Logo />
-          <ul className="hidden md:flex items-center gap-x-6">
+          <ul className="md:flex items-center gap-x-6">
             <li>
               <UserNavbar/>
             </li>
