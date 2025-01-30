@@ -4,7 +4,7 @@ import { NextResponse } from 'next/server'
 import getServerAuthSession, { signIn } from './server/auth';
 import { jwtVerify } from 'jose';
 
-export const config = { matcher: ["/dashboard", "/simplelist"]}
+export const config = { matcher: ["/dashboard", "/simplelist", "/task/:path*"]}
 
 
 export async function middleware(request: NextRequest) {
