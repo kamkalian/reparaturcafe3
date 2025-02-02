@@ -10,6 +10,7 @@ import qrcode.image.svg
 from PIL import Image
 from PIL import ImageFont
 from PIL import ImageDraw
+from api import config
 
 
 from api.auth import get_current_active_user
@@ -30,7 +31,7 @@ async def qrcode_create(
     *,
     task_id: int,
 ) -> StreamingResponse:
-    img = qrcode.make("https://reparaturcafe-dev.it-awo.de/task/"+str(task_id))
+    img = qrcode.make(config.NEXT_PUBLIC_API_URL+"/task/"+str(task_id))
     buf = io.BytesIO()
     img.save(buf)
     buf.seek(0)
@@ -49,7 +50,7 @@ async def label_create(
     awo_logo = Image.open("public/images/awo-logo.png")
     awo_logo = awo_logo.resize((140, 120))
 
-    qrcode_image = qrcode.make("https://reparaturcafe-dev.it-awo.de/task/"+str(task_id))
+    qrcode_image = qrcode.make(config.NEXT_PUBLIC_API_URL+"/task/"+str(task_id))
     qrcode_image = qrcode_image.resize((180, 180))
 
     label_image.paste(qrcode_image, (10, 10))
