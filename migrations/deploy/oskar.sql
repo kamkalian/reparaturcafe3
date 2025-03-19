@@ -2,6 +2,6 @@
 
 BEGIN;
 
-CREATE USER oskar;
+CREATE USER IF NOT EXISTS 'oskar'@'localhost' IDENTIFIED BY 'rootpassword';
 
 COMMIT;
