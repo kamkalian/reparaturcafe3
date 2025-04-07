@@ -73,7 +73,11 @@ exit;
 ```
 
 ## Create database tables
-Execute the folowing command as root:
+Set sqitch username and password
+```bash
+export SQITCH_USERNAME=root && export SQITCH_PASSWORD=******
+```
+Execute the folowing command:
 ```bash
 sqitch deploy db:mysql:reparaturcafe
 ```
