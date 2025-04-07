@@ -165,3 +165,13 @@ Rebase
 ```
 sqitch rebase db:mysql:reparaturcafe --onto users
 ```
+
+# Renew SSL certificate
+Within .venv execute certbot:
+```
+certbot renew
+```
+If success restart nginx:
+```
+systemctl restart nginx
+```
