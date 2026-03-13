@@ -2,7 +2,7 @@
 
 import React from "react";
 
-interface LogRow {
+export interface LogRow {
   id: number;
   creation_date: string;
   comment: string;
@@ -23,12 +23,12 @@ export default function LogItemList({ logs }: Props) {
       {/* Lightbox */}
       {lightboxSrc && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 print:hidden"
+          className="fixed inset-0 z-50 flex items-center justify-center overflow-auto bg-black/80 print:hidden p-8"
           onClick={() => setLightboxSrc(null)}
         >
-          <div className="relative max-w-4xl max-h-full p-4" onClick={(e) => e.stopPropagation()}>
+          <div className="relative inline-block" onClick={(e) => e.stopPropagation()}>
             <button
-              className="absolute top-2 right-2 text-white bg-black/50 rounded-full w-8 h-8 flex items-center justify-center text-lg hover:bg-black/80"
+              className="absolute -top-3 -right-3 text-white bg-black/70 rounded-full w-8 h-8 flex items-center justify-center text-lg hover:bg-black/90 z-10"
               onClick={() => setLightboxSrc(null)}
             >
               ✕
@@ -36,7 +36,7 @@ export default function LogItemList({ logs }: Props) {
             <img
               src={lightboxSrc}
               alt="Vollbild"
-              className="max-h-[85vh] max-w-[90vw] rounded-lg shadow-2xl object-contain"
+              className="block max-h-[90vh] max-w-[90vw] rounded-lg shadow-2xl object-contain"
             />
           </div>
         </div>
@@ -95,8 +95,8 @@ export default function LogItemList({ logs }: Props) {
           <div className="w-full py-1 mb-1 border-b" key={index}>
             <div className="flex flex-row items-start space-x-4">
               <div className="shrink-0">{icon}</div>
-              <div className={commentClass}>
-                <span>{row.comment}</span>
+              <div className={`${commentClass} min-w-0`}>
+                <span className="[overflow-wrap:anywhere]">{row.comment}</span>
                 {imgSrc && (
                   <div className="mt-2 print:mt-1">
                     <img

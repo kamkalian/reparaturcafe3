@@ -19,7 +19,7 @@ class LogDataAssignments(pydantic.BaseModel):
 class LogData(pydantic.BaseModel):
     """Log data model."""
 
-    comment: str
+    comment: str = pydantic.Field(max_length=1000)
     record_type: str
 
 

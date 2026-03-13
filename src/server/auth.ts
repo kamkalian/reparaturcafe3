@@ -32,6 +32,12 @@ export async function getUserID(){
     return JSON.parse(cookies().get("user_data")?.value)["id"]
 }
 
+export async function getUserName(): Promise<string | null> {
+    const userData = cookies().get("user_data")?.value;
+    if (!userData) return null;
+    return JSON.parse(userData)["username"] ?? null;
+}
+
 
 export async function signIn(username: string, password: string, callbackUrl: string) {
     const res = await fetch(

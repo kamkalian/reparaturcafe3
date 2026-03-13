@@ -1,14 +1,13 @@
 import TaskCard from "@/app/components/TaskCard";
 import TaskDeviceArea from "@/app/components/TaskDeviceArea";
-import TaskOwnerArea from "@/app/components/TaskOwnerArea"
+import TaskOwnerArea from "@/app/components/TaskOwnerArea";
 import TaskStateArea from "@/app/components/TaskStateArea";
 import TaskLocationArea from "@/app/components/TaskLocationArea";
 import { userList } from "@/server/user-list";
 import { LogList } from "@/server/log-list";
 import { cookies } from "next/headers";
-import CommentForm from "@/app/components/CommentForm";
-import LogItemList from "@/app/components/LogItemList";
-import { getUserID } from "@/server/auth";
+import LogSection from "@/app/components/LogSection";
+import { getUserID, getUserName } from "@/server/auth";
 
 
 async function getData(id: string) {
@@ -60,6 +59,7 @@ export default async function Page({ params }: { params: { id: string } }) {
 
   const userList = await getUserList();
   const userID = await getUserID();
+  const supervisorName = await getUserName();
   const srcQRCode = "https://reparaturcafe-dev.it-awo.de/fastapi/qrcode/create?task_id=" + taskData["id"]
 
   return (
@@ -146,14 +146,13 @@ export default async function Page({ params }: { params: { id: string } }) {
           <div className="flex flex-col items-start pb-4">
             <div className="font-thin bg-slate-200 px-2 rounded-tl-md rounded-br-md print:mb-2 print:w-full">Verlauf</div>
             <div className="p-4 print:p-2 w-full">
-              <LogItemList
-                logs={logs}
-              />
-              <CommentForm 
-                supervisorID={userID}
+              <LogSection
+                initialLogs={logs}
+                supervisorID={String(userID)}
+                supervisorName={supervisorName}
                 taskID={params.id}
                 deviceName={taskData["device_name"] ?? ""}
-                />
+              />
             </div>
           </div>
         </div>
