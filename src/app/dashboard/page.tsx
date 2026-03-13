@@ -1,6 +1,7 @@
 import TaskListBar from "@/app/components/TaskListBar";
 import TaskList from "../components/TaskList";
 import AddButton from "@/app/components/AddButton";
+import { Suspense } from "react";
 
 
 
@@ -34,7 +35,9 @@ export default async function Page({
   return (
     <>
       <h2 className="text-4xl font-extrabold mb-6">Dashboard</h2>
-      <TaskListBar/>
+      <Suspense fallback={null}>
+        <TaskListBar/>
+      </Suspense>
       <TaskList
         query={query}
         stateFilters={stateFilters}
