@@ -4,7 +4,6 @@ import React from "react";
 import { updateTaskState } from '@/server/task-state-update';
 import { updateTaskSupervisor } from '@/server/task-supervisor-update';
 import { useSnackbar, type ProviderContext } from 'notistack';
-import { useRouter } from 'next/navigation'
 import { getUserID } from "@/server/auth";
 import { createRecord } from "@/server/record-create";
 
@@ -21,7 +20,6 @@ interface Props {
 
 export default function TaskStateArea(props: Props) {
 
-  const router = useRouter();
   const snackbarContext = useSnackbar();
 
   const enqeueSuccessfulNotification = (
@@ -37,29 +35,29 @@ export default function TaskStateArea(props: Props) {
       anchorOrigin: {horizontal: "right", vertical: "bottom"},
     });
   }
-  
+
+  const handleStateChange = async (newState: string, label: string) => {
+    try {
+      await updateTaskState(newState, props.taskID);
+      const userID = await getUserID();
+      await createRecord(userID, props.taskID, `Status auf '${label}' geändert.`, "action");
+      enqeueSuccessfulNotification("Status geändert.", snackbarContext);
+    } catch (e) {
+      console.error("State change error:", e);
+    } finally {
+      window.location.href = '/task/' + props.taskID;
+    }
+  };
   const buttonNew = () => {
     const baseClass = "flex items-center justify-center w-32 h-10 rounded-md text-white shrink-0"
     const hover = props.taskState !== "new" ? "hover:bg-button-active" : ""
     const highlight = props.taskState === "new" ? "bg-yellow-600/75" : "bg-button-inactive"
-  
+
     return(
       <li className="flex w-full items-center after:content-[''] after:w-full after:h-1 after:border-b after:border-blue-100 after:border-4 after:inline-block dark:after:border-gray-300">
-        <button 
+        <button
           className={baseClass + " " + hover + " " + highlight}
-          onClick={async () => {
-            updateTaskState("new", props.taskID)
-            const userID = await getUserID();
-            await createRecord(
-              userID,
-              props.taskID,
-              "Status auf 'Neu' geändert.",
-              "action"
-            )
-            enqeueSuccessfulNotification("Status geändert.", snackbarContext);
-            router.push('/task/' + props.taskID);
-          }
-          }
+          onClick={() => handleStateChange("new", "Neu")}
         >
             Neu
         </button>
@@ -76,19 +74,7 @@ export default function TaskStateArea(props: Props) {
       <li className="flex w-full items-center after:content-[''] after:w-full after:h-1 after:border-b after:border-blue-100 after:border-4 after:inline-block dark:after:border-gray-300">
         <button
           className={baseClass + " " + hover + " " + highlight}
-          onClick={async () => {
-            updateTaskState("in_process", props.taskID)
-            const userID = await getUserID();
-            await createRecord(
-              userID,
-              props.taskID,
-              "Status auf 'In Arbeit' geändert.",
-              "action"
-            )
-            enqeueSuccessfulNotification("Status geändert.", snackbarContext);
-            router.push('/task/' + props.taskID);
-          }
-          }
+          onClick={() => handleStateChange("in_process", "In Arbeit")}
           >
             In Arbeit
         </button>
@@ -105,19 +91,7 @@ export default function TaskStateArea(props: Props) {
       <li className="flex w-full items-center after:content-[''] after:w-full after:h-1 after:border-b after:border-blue-100 after:border-4 after:inline-block dark:after:border-gray-300">
         <button
           className={baseClass + " " + hover + " " + highlight}
-          onClick={async () => {
-            updateTaskState("done", props.taskID)
-            const userID = await getUserID();
-            await createRecord(
-              userID,
-              props.taskID,
-              "Status auf 'Fertig' geändert.",
-              "action"
-            )
-            enqeueSuccessfulNotification("Status geändert.", snackbarContext);
-            router.push('/task/' + props.taskID);
-          }
-          }
+          onClick={() => handleStateChange("done", "Fertig")}
           >
             Fertig
         </button>
@@ -134,19 +108,7 @@ export default function TaskStateArea(props: Props) {
       <li className="flex w-full items-center">
         <button
           className={baseClass + " " + hover + " " + highlight}
-          onClick={ async() => {
-            updateTaskState("completed", props.taskID)
-            const userID = await getUserID();
-            await createRecord(
-              userID,
-              props.taskID,
-              "Status auf 'Abgeschlossen' geändert.",
-              "action"
-            )
-            enqeueSuccessfulNotification("Status geändert.", snackbarContext);
-            router.push('/task/' + props.taskID);
-          }
-          }
+          onClick={() => handleStateChange("completed", "Abgeschlossen")}
           >
             Abgeschlossen
         </button>
@@ -164,17 +126,17 @@ export default function TaskStateArea(props: Props) {
   })
 
   const handleSupervisorChange = async (value: string, username: string) => {
-    updateTaskSupervisor(value, props.taskID);
-    const userID = await getUserID();
-    await createRecord(
-      userID,
-      props.taskID,
-      "Bearbeiter zu '" + username + "' geändert.",
-      "action"
-    )
-    enqeueSuccessfulNotification("Bearbeiter geändert.", snackbarContext);
-    router.push('/task/' + props.taskID);
-  }
+    try {
+      await updateTaskSupervisor(value, props.taskID);
+      const userID = await getUserID();
+      await createRecord(userID, props.taskID, "Bearbeiter zu '" + username + "' geändert.", "action");
+      enqeueSuccessfulNotification("Bearbeiter geändert.", snackbarContext);
+    } catch (e) {
+      console.error("Supervisor change error:", e);
+    } finally {
+      window.location.href = '/task/' + props.taskID;
+    }
+  };
 
   const creationDate = new Date(props.taskCreationDate);
   const creationDateFormatted = creationDate.toLocaleDateString(

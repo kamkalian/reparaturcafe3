@@ -2,13 +2,13 @@
 import { cookies } from "next/headers";
 
 export async function createRecord(
-  supervisorID: string,
+  supervisorID: string | null,
   taskID: string,
   comment: string,
   recordType: string,
 ) {
   const body = JSON.stringify({
-    supervisor_id: supervisorID,
+    supervisor_id: supervisorID ? Number(supervisorID) : null,
     task_id: Number(taskID),
     comment: comment,
     record_type: recordType,
@@ -25,6 +25,8 @@ export async function createRecord(
     }
   )
   if (!res.ok) {
+    const errText = await res.text().catch(() => res.status.toString());
+    console.error('createRecord failed:', res.status, errText);
     return null
   }
   const data = await res.json();

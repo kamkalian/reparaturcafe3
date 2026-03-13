@@ -12,7 +12,7 @@ class LogBase(pydantic.BaseModel):
 class LogDataAssignments(pydantic.BaseModel):
     """Log data assignments model."""
 
-    supervisor_id: int
+    supervisor_id: int | None
     task_id: int
 
 

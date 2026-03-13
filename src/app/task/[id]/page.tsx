@@ -9,6 +9,8 @@ import { cookies } from "next/headers";
 import LogSection from "@/app/components/LogSection";
 import { getUserID, getUserName } from "@/server/auth";
 
+export const dynamic = 'force-dynamic';
+
 
 async function getData(id: string) {
   const cookieStore = await cookies();
@@ -16,6 +18,7 @@ async function getData(id: string) {
   const res = await fetch(
     process.env.NEXT_PUBLIC_API_URL + '/fastapi/task/get_by_id/' + id, {
         method: 'GET',
+        cache: 'no-store',
         headers: {
             'Authorization': 'Bearer ' + session
         }
@@ -37,6 +40,7 @@ async function getOwnerData(id: string) {
   const res = await fetch(
     process.env.NEXT_PUBLIC_API_URL + '/fastapi/owner/get_by_id/' + id, {
         method: 'GET',
+        cache: 'no-store',
         headers: {
             'Authorization': 'Bearer ' + session
         }
