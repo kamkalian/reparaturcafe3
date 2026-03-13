@@ -1,6 +1,5 @@
 import { NotistackProvider } from "./SnackbarProviderClient";
 import './global.css'
-import { CookiesProvider } from 'next-client-cookies/server';
 
 
 export const metadata = {
@@ -15,16 +14,14 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <CookiesProvider>
-      <html lang="de">
-        <body>
-          <div className="screen:text-lg print:text-sm font-medium relative">
-            <NotistackProvider maxSnack={3}>
-              {children}
-            </NotistackProvider>
-          </div>
-        </body>
-      </html>
-    </CookiesProvider>
+    <html lang="de">
+      <body>
+        <div className="screen:text-lg print:text-sm font-medium relative">
+          <NotistackProvider maxSnack={3}>
+            {children}
+          </NotistackProvider>
+        </div>
+      </body>
+    </html>
   )
 }

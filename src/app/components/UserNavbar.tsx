@@ -1,27 +1,25 @@
 "use client";
 
 import { signOut } from "@/server/auth";
-import { User } from "@/types/user";
-import { useCookies } from "next-client-cookies";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React, { useContext, useEffect } from "react";
-import { NextRequest } from 'next/server';
+import React, { useEffect } from "react";
 
-type UserInfoProps = {
-  user: User;
+function getClientCookie(name: string): string | undefined {
+  if (typeof document === "undefined") return undefined;
+  const match = document.cookie.match(new RegExp('(?:^|; )' + name.replace(/([.*+?^=!:${}()|[\]/\\])/g, '\\$1') + '=([^;]*)'));
+  return match ? decodeURIComponent(match[1]) : undefined;
 }
 
-
 export default function UserNavbar() {
-  const cookies = useCookies();
   const router = useRouter();
   const [userIsLoggedIn, setUserIsLoggedIn] = React.useState(false)
   const [username, setUsername] = React.useState(undefined)
   
   useEffect(() => {    
-    if ( cookies.get("user_data") ) {
-      setUsername(JSON.parse(cookies.get("user_data"))["username"]);
+    const userData = getClientCookie("user_data");
+    if (userData) {
+      setUsername(JSON.parse(userData)["username"]);
       setUserIsLoggedIn(true);
     } else {
       setUserIsLoggedIn(false);
