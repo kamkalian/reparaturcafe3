@@ -8,26 +8,27 @@ import { Suspense } from "react";
 export default async function Page({
   searchParams,
 }: {
-  searchParams?: {
+  searchParams?: Promise<{
     query?: string;
     new?: string;
     in_process?: string;
     done?: string;
     completed?: string;
-  };
+  }>;
 }) {
-  const query = searchParams?.query || '';
+  const resolvedParams = await searchParams;
+  const query = resolvedParams?.query || '';
   const stateFilters = [];
-  if(searchParams?.new){
+  if(resolvedParams?.new){
     stateFilters.push("new");
   }
-  if(searchParams?.in_process){
+  if(resolvedParams?.in_process){
     stateFilters.push("in_process");
   }
-  if(searchParams?.done){
+  if(resolvedParams?.done){
     stateFilters.push("done");
   }
-  if(searchParams?.completed){
+  if(resolvedParams?.completed){
     stateFilters.push("completed");
   }
 

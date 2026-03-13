@@ -55,15 +55,16 @@ async function getUserList() {
 }
 
 
-export default async function Page({ params }: { params: { id: string } }) {
-  const taskData = await getData(params.id);
+export default async function Page({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const taskData = await getData(id);
 
   if (!taskData) {
     return <div>Aufgabe nicht gefunden.</div>;
   }
 
   const ownerData = await getOwnerData(taskData["owner_id"]);
-  const logs = await LogList(params.id)
+  const logs = await LogList(id)
 
 
   const userList = await getUserList();
@@ -94,13 +95,13 @@ export default async function Page({ params }: { params: { id: string } }) {
         </div>
         <div className="flex screen:flex-row space-x-4">
           <TaskDeviceArea 
-          taskID={params.id}
+          taskID={id}
           currentDeviceName={taskData["device_name"]}
           currentDeviceManufacturer={taskData["device_manufacturer"]}
           currentDeviceModel={taskData["device_model"]}
           currentDeviceErrorDescription={taskData["device_error_description"]}/>
           <TaskOwnerArea
-          taskID={params.id}
+          taskID={id}
           currentOwnerID={ownerData ? ownerData["id"] : null}
           currentOwnerLastName={ownerData ? ownerData["last_name"] : ""}
           currentOwnerFirstName={ownerData ? ownerData["first_name"] : ""}
@@ -113,13 +114,13 @@ export default async function Page({ params }: { params: { id: string } }) {
         </div>
         <div className="flex flex-row space-x-4">
           <TaskLocationArea 
-            taskID={params.id}
+            taskID={id}
             taskShelfNo={taskData["shelf_no"]}
             taskShelfFloorNo={taskData["shelf_floor_no"]}
             taskOtherLocation={taskData["other_location"]}
           />
           <TaskStateArea
-            taskID={params.id}
+            taskID={id}
             taskCreationDate={taskData["creation_date"]}
             taskSupervisorID={taskData["supervisor_id"]}
             taskSupervisorName={taskData["supervisor_name"]}
@@ -159,7 +160,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                 initialLogs={logs}
                 supervisorID={String(userID)}
                 supervisorName={supervisorName}
-                taskID={params.id}
+                taskID={id}
                 deviceName={taskData["device_name"] ?? ""}
               />
             </div>
