@@ -11,11 +11,13 @@ import { getUserID, getUserName } from "@/server/auth";
 
 
 async function getData(id: string) {
+  const cookieStore = await cookies();
+  const session = cookieStore.get("session")?.value;
   const res = await fetch(
     process.env.NEXT_PUBLIC_API_URL + '/fastapi/task/get_by_id/' + id, {
         method: 'GET',
         headers: {
-            'Authorization': 'Bearer ' + cookies().get("session")?.value
+            'Authorization': 'Bearer ' + session
         }
     }
   )
@@ -30,11 +32,13 @@ async function getData(id: string) {
 
 async function getOwnerData(id: string) {
   if(id === null) return null;
+  const cookieStore = await cookies();
+  const session = cookieStore.get("session")?.value;
   const res = await fetch(
     process.env.NEXT_PUBLIC_API_URL + '/fastapi/owner/get_by_id/' + id, {
         method: 'GET',
         headers: {
-            'Authorization': 'Bearer ' + cookies().get("session")?.value
+            'Authorization': 'Bearer ' + session
         }
     }
   )
