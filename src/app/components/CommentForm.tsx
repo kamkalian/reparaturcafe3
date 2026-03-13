@@ -103,6 +103,7 @@ export default function CommentForm({ taskID, supervisorID, deviceName, supervis
 
     try {
       const result = await createRecord(supervisorID, taskID, comment, "comment");
+      if ('error' in result) throw new Error(result.error);
       if (!result?.id) throw new Error("Kein log_id erhalten");
 
       let finalImageUrl: string | null = null;
