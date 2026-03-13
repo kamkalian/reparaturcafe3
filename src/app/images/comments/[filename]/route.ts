@@ -12,9 +12,9 @@ const MIME_TYPES: Record<string, string> = {
 
 export async function GET(
   _req: NextRequest,
-  { params }: { params: { filename: string } }
+  { params }: { params: Promise<{ filename: string }> }
 ) {
-  const filename = params.filename;
+  const { filename } = await params;
 
   // Sicherheitscheck: Keine Pfad-Traversal
   if (!filename || filename.includes("..") || filename.includes("/")) {
