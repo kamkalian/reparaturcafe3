@@ -6,3 +6,8 @@ node_modules
 .mypy_cache
 .env
 *.pyc
+
+public/
+
+plan.md
+change.md

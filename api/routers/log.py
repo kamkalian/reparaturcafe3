@@ -1,10 +1,12 @@
 from __future__ import annotations
 
 import typing as t
+
 import fastapi
+from fastapi.responses import JSONResponse
 
 from api.auth import get_current_active_user
-from api.db_queries.log import query_get_logs_from_task, query_insert_log_record
+from api.db_queries.log import query_get_logs_from_task, query_insert_log_record, query_update_log_image_url
 from api.models.log import PayloadLogRecordCreate, PayloadLog
 from api.dependencies.db import get_db_connection
 
@@ -30,13 +32,23 @@ async def create_comment(
     *,
     log_payload: PayloadLogRecordCreate,
     current_active_user=fastapi.Depends(get_current_active_user),
-) -> None:
-    await query_insert_log_record(
-        db_conn=db_conn,
-        log_payload=PayloadLogRecordCreate(
-            comment=log_payload.comment,
-            supervisor_id=log_payload.supervisor_id,
-            task_id=log_payload.task_id,
-            record_type=log_payload.record_type  
-        ))
+) -> JSONResponse:
+    log_id = await query_insert_log_record(db_conn=db_conn, log_payload=log_payload)
     await db_conn.connection.commit()
+    return JSONResponse({"id": log_id})
+
+
+@router.post("/set_image_url/{log_id}")
+async def set_image_url(
+    log_id: int,
+    db_conn: db_types.DBConnection = fastapi.Depends(get_db_connection),
+    current_active_user=fastapi.Depends(get_current_active_user),
+    payload: dict = fastapi.Body(...),
+) -> JSONResponse:
+    image_url = payload.get("image_url")
+    if not image_url:
+        raise fastapi.HTTPException(status_code=400, detail="image_url fehlt.")
+    await query_update_log_image_url(db_conn=db_conn, log_id=log_id, image_url=image_url)
+    await db_conn.connection.commit()
+    return JSONResponse({"ok": True})
+

@@ -15,14 +15,15 @@ async def query_insert_log_record(
 ) -> int:
     """Insert new log record."""
     query_str = """
-    insert into logs (comment, supervisor_id, task_id, record_type)
-    values (%s, %s, %s, %s);
+    insert into logs (comment, supervisor_id, task_id, record_type, image_url)
+    values (%s, %s, %s, %s, %s);
     """
     _query_params = (
         log_payload.comment,
         log_payload.supervisor_id,
         log_payload.task_id,
-        log_payload.record_type
+        log_payload.record_type,
+        log_payload.image_url
     )
     try:
         await db_conn.cursor.execute(query_str, _query_params)
@@ -32,6 +33,21 @@ async def query_insert_log_record(
             err_msg = "Query returned None, but should always return anything."
             raise AssertionError(err_msg)
         return int(row[0])
+    except Exception as e:
+        print(e)
+        raise
+
+
+async def query_update_log_image_url(
+        db_conn: db_types.DBConnection,
+        *,
+        log_id: int,
+        image_url: str,
+) -> None:
+    """Update image_url for a log record."""
+    query_str = "UPDATE logs SET image_url = %s WHERE id = %s;"
+    try:
+        await db_conn.cursor.execute(query_str, (image_url, log_id))
     except Exception as e:
         print(e)
         raise
@@ -49,7 +65,8 @@ async def query_get_logs_from_task(
     creation_date,
     comment,
     record_type,
-    username
+    username,
+    image_url
     from logs as l
     left join users as u on supervisor_id = u.id
     where task_id = %s;
@@ -66,7 +83,8 @@ async def query_get_logs_from_task(
             creation_date=row[1],
             comment=row[2],
             record_type=row[3],
-            supervisor_name=row[4]
+            supervisor_name=row[4],
+            image_url=row[5]
         ) for row in rows)
     except Exception as e:
         print(e)

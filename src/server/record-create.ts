@@ -5,15 +5,15 @@ export async function createRecord(
   supervisorID: string,
   taskID: string,
   comment: string,
-  recordType: string
-) { 
-
+  recordType: string,
+) {
   const body = JSON.stringify({
     supervisor_id: supervisorID,
-    task_id: taskID,
+    task_id: Number(taskID),
     comment: comment,
-    record_type: recordType
-  });   
+    record_type: recordType,
+  });
+
   const res = await fetch(
     process.env.NEXT_PUBLIC_API_URL + '/fastapi/log/create_record', {
         method: 'POST',
@@ -24,9 +24,10 @@ export async function createRecord(
         body: body
     }
   )
-  if(!res.ok) {
-      return false
+  if (!res.ok) {
+    return null
   }
   const data = await res.json();
-return data;
+  return data; // { id: log_id }
 }
+

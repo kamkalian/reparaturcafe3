@@ -27,7 +27,10 @@ class PayloadLog(LogBase, LogData):
     """Payload Log data model."""
 
     supervisor_name: str | None
+    image_url: str | None = None
 
 
 class PayloadLogRecordCreate(LogData, LogDataAssignments):
-    """Payload Log record create data model."""   
+    """Payload Log record create data model."""
+    image_url: str | None = None
+
