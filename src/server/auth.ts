@@ -6,7 +6,8 @@ import { redirect } from "next/navigation";
 
 
 export default async function getServerAuthSession(){
-    const sessionToken = cookies().get("session")?.value;
+    const cookieStore = await cookies();
+    const sessionToken = cookieStore.get("session")?.value;
 
     if (sessionToken === undefined) return null;
     if (process.env.SECRET_KEY === undefined) new Error("Secret key is missing.");
@@ -28,12 +29,15 @@ export default async function getServerAuthSession(){
 
 }
 
-export async function getUserID(){
-    return JSON.parse(cookies().get("user_data")?.value)["id"]
+export async function getUserID(): Promise<string | null> {
+    const value = (await cookies()).get("user_data")?.value;
+    if (!value) return null;
+    const id = JSON.parse(value)["id"];
+    return id != null ? String(id) : null;
 }
 
 export async function getUserName(): Promise<string | null> {
-    const userData = cookies().get("user_data")?.value;
+    const userData = (await cookies()).get("user_data")?.value;
     if (!userData) return null;
     return JSON.parse(userData)["username"] ?? null;
 }
@@ -52,8 +56,9 @@ export async function signIn(username: string, password: string, callbackUrl: st
         return false
     }
     const token = await res.json();
+    const cookieStore = await cookies();
 
-    cookies().set(
+    cookieStore.set(
         "session",
         token.access_token,
         {
@@ -69,7 +74,7 @@ export async function signIn(username: string, password: string, callbackUrl: st
             method: 'GET',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
-                'Authorization': 'Bearer ' + cookies().get("session")?.value
+                'Authorization': 'Bearer ' + cookieStore.get("session")?.value
             }
         }
     );
@@ -78,7 +83,7 @@ export async function signIn(username: string, password: string, callbackUrl: st
     }
     const user = await userRes.json();
 
-    cookies().set(
+    cookieStore.set(
         "user_data",
         JSON.stringify(
             {
@@ -96,6 +101,7 @@ export async function signIn(username: string, password: string, callbackUrl: st
 
 
   export async function signOut() {
-    cookies().delete("session");
-    cookies().delete("user_data");
+    const cookieStore = await cookies();
+    cookieStore.delete("session");
+    cookieStore.delete("user_data");
   }

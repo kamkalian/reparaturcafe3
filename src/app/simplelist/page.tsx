@@ -6,7 +6,7 @@ async function getData() {
         method: 'GET',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
-            'Authorization': 'Bearer ' + cookies().get("session")?.value
+            'Authorization': 'Bearer ' + (await cookies()).get("session")?.value
         }
     }
   )
@@ -22,6 +22,11 @@ async function getData() {
 
 export default async function Page() {
   const data = await getData();
+
+  if (!data) {
+    return <div>Keine Daten gefunden.</div>;
+  }
+
   const rows = data.map((row, index) => {
     const creationDate = new Date(row["creation_date"]).toLocaleDateString('de-DE', {
       day: '2-digit',

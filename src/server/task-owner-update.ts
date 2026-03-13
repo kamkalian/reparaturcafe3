@@ -13,7 +13,7 @@ export async function updateTaskOwner(
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + cookies().get("session")?.value
+            'Authorization': 'Bearer ' + (await cookies()).get("session")?.value
         },
         body: body
     }

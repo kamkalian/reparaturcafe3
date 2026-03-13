@@ -3,7 +3,8 @@ import TaskCard from "./TaskCard";
 
 
 async function getData(query: string | undefined, stateFilters: string[] | undefined) {
-  const access_token = cookies().get('session')
+  const cookieStore = await cookies();
+  const access_token = cookieStore.get('session')
 
   let url_param = "";
   const params = [];
@@ -24,7 +25,7 @@ async function getData(query: string | undefined, stateFilters: string[] | undef
         method: 'GET',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
-            'Authorization': 'Bearer ' + cookies().get("session")?.value
+            'Authorization': 'Bearer ' + cookieStore.get("session")?.value
         }
     }
   )

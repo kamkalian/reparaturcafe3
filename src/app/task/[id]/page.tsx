@@ -57,6 +57,11 @@ async function getUserList() {
 
 export default async function Page({ params }: { params: { id: string } }) {
   const taskData = await getData(params.id);
+
+  if (!taskData) {
+    return <div>Aufgabe nicht gefunden.</div>;
+  }
+
   const ownerData = await getOwnerData(taskData["owner_id"]);
   const logs = await LogList(params.id)
 
