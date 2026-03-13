@@ -35,7 +35,8 @@ export async function POST(req: NextRequest) {
   await writeFile(path.join(publicDir, filename), new Uint8Array(bytes));
 
   // Informiere FastAPI, damit die DB aktualisiert wird
-  const session = cookies().get("session")?.value;
+  const cookieStore = await cookies();
+  const session = cookieStore.get("session")?.value;
   const apiRes = await fetch(
     process.env.NEXT_PUBLIC_API_URL + `/fastapi/log/set_image_url/${logId}`,
     {
