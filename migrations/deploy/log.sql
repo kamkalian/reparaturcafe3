@@ -8,8 +8,7 @@ create table logs (
     comment varchar(255),
     record_type varchar(255),
     task_id int,
-    supervisor_id int,
-    image_url varchar(512) default null
+    supervisor_id int
 );
 
 COMMIT;
