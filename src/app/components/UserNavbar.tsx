@@ -51,6 +51,11 @@ export default function UserNavbar() {
             </Link>
           </li>
           <li>
+            <Link href="/statistik">
+              <p>Statistiken</p>
+            </Link>
+          </li>
+          <li>
             <div className="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-green-600 rounded-full">
               <span className="font-medium text-white">{username.slice(0,3).toUpperCase()}</span>
             </div>

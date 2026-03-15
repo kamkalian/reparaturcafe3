@@ -11,7 +11,7 @@ export async function updateTaskDevice(
   const body = JSON.stringify({
     device_name: deviceName, 
     device_error_description: deviceErrorDescription, 
-    device_manufacturer: deviceManafacturer,
+    device_manufacturer: deviceManafacturer ? deviceManafacturer : "",
     device_model: deviceModel,
   });   
   const res = await fetch(

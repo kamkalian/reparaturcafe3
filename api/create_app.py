@@ -15,7 +15,7 @@ from fastapi_nextauth_jwt.exceptions import MissingTokenError
 import config
 import db_connection
 
-from .routers import auth, state, task, user, owner, task_device_location, task_qrcode, log
+from .routers import auth, state, task, user, owner, task_device_location, task_qrcode, log, statistics
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -73,6 +73,7 @@ def create_app(
     app.include_router(owner.router)
     app.include_router(task_qrcode.router)
     app.include_router(log.router)
+    app.include_router(statistics.router)
 
     logger.debug("Return app.")
     return app
